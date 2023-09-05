@@ -1,3 +1,9 @@
 package main
 
-func main() {}
+import (
+	"example/go-playground/concurrency"
+)
+
+func main() {
+	concurrency.ExampleGoroutines1()
+}

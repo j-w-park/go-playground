@@ -2,7 +2,7 @@ package concurrency
 
 import "fmt"
 
-func ExampleBufferedChannels1() {
+func Example3BufferedChannels1() {
 	fmt.Println("run ExampleBufferedChannels1")
 	messages := make(chan string, 2)
 	messages <- "buffered"

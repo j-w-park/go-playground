@@ -15,7 +15,7 @@ func sum(s []int, c chan int) {
 	c <- sum // send sum to c
 }
 
-func ExampleChannels1() {
+func Example2Channels1() {
 	fmt.Println("run ExampleChannels1")
 	s := []int{7, 2, 8, -9, 4, 0}
 
@@ -27,7 +27,7 @@ func ExampleChannels1() {
 	fmt.Println(x, y, x+y)
 }
 
-func ExampleChannels2() {
+func Example2Channels2() {
 	fmt.Println("run ExampleChannels2")
 	messages := make(chan string)
 	go func() {

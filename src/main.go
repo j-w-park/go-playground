@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	concurrency.ExampleGoroutines1()
+	concurrency.ExampleChannels2()
 }

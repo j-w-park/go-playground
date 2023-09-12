@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	concurrency.ExampleBufferedChannels1()
+	concurrency.Example4RangeAndClose2()
 }

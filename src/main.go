@@ -1,9 +1,9 @@
 package main
 
 import (
-	"example/go-playground/slice"
+	"example/go-playground/exercise"
 )
 
 func main() {
-	slice.Example1LenAndCap()
+	exercise.ExerciseImage()
 }

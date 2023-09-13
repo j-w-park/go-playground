@@ -1,9 +1,9 @@
 package main
 
 import (
-	"example/go-playground/concurrency"
+	"example/go-playground/slice"
 )
 
 func main() {
-	concurrency.Example4RangeAndClose2()
+	slice.Example1LenAndCap()
 }

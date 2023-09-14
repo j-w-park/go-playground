@@ -2,8 +2,6 @@ services:
   go-playground:
     image: golang
     container_name: go-playground
-    ports:
-      - 8080:8080
     working_dir: /src
     volumes:
       - ./src:/src

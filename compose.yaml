@@ -2,13 +2,7 @@ services:
   go-playground:
     image: golang
     container_name: go-playground
-    working_dir: /src
+    working_dir: /go-playground
     volumes:
-      - ./src:/src
-      - ./bin:/bin/go-playground
-    command:
-      [
-        "/bin/bash",
-        "-c",
-        "go build -o /bin/go-playground/main && /bin/go-playground/main"
-      ]
+      - .:/go-playground
+    command: ["make", "run"]

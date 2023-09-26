@@ -1,7 +1,7 @@
 package main
 
 import (
-	"example/go-playground/exercise"
+	"github.com/j-w-park/go-playground/src/exercise"
 )
 
 func main() {

@@ -12,8 +12,9 @@ const (
 )
 
 type StatusErr struct {
-	Status  Status
-	Message string
+	Status        Status
+	Message       string
+	InternalError error
 }
 
 func (se StatusErr) Error() string {

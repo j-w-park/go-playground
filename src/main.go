@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	handling_error.CustomError()
+	handling_error.Wrapping()
 }

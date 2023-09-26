@@ -1,4 +1,4 @@
-package exercise
+package exercise_image
 
 import (
 	"image"

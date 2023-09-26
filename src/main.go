@@ -1,7 +1,7 @@
 package main
 
-import "github.com/j-w-park/go-playground/src/array_and_slice"
+import example_assertion "github.com/j-w-park/go-playground/src/assertion"
 
 func main() {
-	array_and_slice.Example2Slice()
+	example_assertion.Example1TypeAssertion()
 }

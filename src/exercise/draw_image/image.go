@@ -1,4 +1,4 @@
-package exercise_image
+package draw_image
 
 import (
 	"image"
@@ -27,7 +27,7 @@ func (i *Image) ColorModel() color.Model {
 	return color.RGBAModel
 }
 
-func ExerciseImage() {
+func Draw() {
 	m := Image{300, 300}
 	pic.ShowImage(&m)
 }

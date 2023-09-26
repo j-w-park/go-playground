@@ -1,4 +1,4 @@
-package example_types_and_interface
+package type_and_interface
 
 import (
 	"errors"

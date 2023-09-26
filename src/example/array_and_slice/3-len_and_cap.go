@@ -1,4 +1,4 @@
-package example_array_and_slice
+package array_and_slice
 
 import "fmt"
 

@@ -2,7 +2,7 @@ package array_and_slice
 
 import "fmt"
 
-func Example1LenAndCap() {
+func Example3LenAndCap() {
 	arr0 := []int{}
 	arr0 = append(arr0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 	fmt.Println(len(arr0), cap(arr0)) // 11 10

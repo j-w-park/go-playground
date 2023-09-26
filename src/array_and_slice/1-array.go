@@ -2,7 +2,7 @@ package array_and_slice
 
 import "fmt"
 
-func Example2Array() {
+func Example1Array() {
 	var arr0 = [3]int{1, 2, 3}
 	var arr1 = [...]int{1, 2, 3}
 	fmt.Println(arr0 == arr1) // true

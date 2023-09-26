@@ -1,9 +1,7 @@
 package main
 
-import (
-	array_and_slice "github.com/j-w-park/go-playground/src/array-and-slice"
-)
+import "github.com/j-w-park/go-playground/src/array_and_slice"
 
 func main() {
-	array_and_slice.Example2Array()
+	array_and_slice.Example2Slice()
 }

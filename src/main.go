@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/j-w-park/go-playground/src/exercise"
+	array_and_slice "github.com/j-w-park/go-playground/src/array-and-slice"
 )
 
 func main() {
-	exercise.ExerciseImage()
+	array_and_slice.Example2Array()
 }

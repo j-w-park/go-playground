@@ -1,7 +1,9 @@
 package main
 
-import "github.com/j-w-park/go-playground/src/exercise/dep_injection"
+import (
+	"github.com/j-w-park/go-playground/src/example/handling_error"
+)
 
 func main() {
-	dep_injection.Main()
+	handling_error.SentinelError()
 }

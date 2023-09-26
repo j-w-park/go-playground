@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	handling_error.SentinelError()
+	handling_error.CustomError()
 }

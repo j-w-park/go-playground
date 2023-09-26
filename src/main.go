@@ -1,7 +1,7 @@
 package main
 
-import example_assertion "github.com/j-w-park/go-playground/src/assertion"
+import example_types_and_interface "github.com/j-w-park/go-playground/src/types_and_interface"
 
 func main() {
-	example_assertion.Example1TypeAssertion()
+	example_types_and_interface.TreeVal()
 }

@@ -1,10 +1,29 @@
+# https://www.gnu.org/software/make/manual/html_node/Quick-Reference.html
+# https://stackoverflow.com/questions/448910/what-is-the-difference-between-the-gnu-makefile-variable-assignments-a
+
 # Change these variables as necessary.
-MAIN_PACKAGE_PATH := ${shell pwd}/src
 BINARY_NAME := go-playground
 
-# ==================================================================================== #
-# HELPERS
-# ==================================================================================== #
+# 빌드 플래그
+GO_FLAGS += -v
+GO_FLAGS += -o=./bin/${BINARY_NAME}
+# VCS 관련 meta 정보를 바이너리에 포함하지 않도록 설정.
+# 컨테이너 환경에서 빌드할 때 VCS 정보를 가져오지 못해 빌드가 실패하는 경우가 있음.
+# 필요하면 빌드하기 전에 git safe directory 설정을 추가하면 되긴 하는듯
+# git config --global --add safe.directory ${shell pwd}
+GO_FLAGS += -buildvcs=false
+
+GO_FLAGS_DEV += ${GO_FLAGS}
+# 컴파일러 플래그 설정
+# 아래 옵션은 컴파일 시 최적화를 비활성화한다.
+# `go tool compile`(또는 https://golang.org/cmd/compile/)를 실행하면 더 많은 옵션 정보를 얻을 수 있다.
+GO_FLAGS_DEV += -gcflags="all=-N -l"
+
+GO_FLAGS_PRD += ${GO_FLAGS}
+# 링커 플래그 설정
+# 아래 설정은 빌드된 바이너리의 크기를 최대한 줄이기 위해 디버깅 정보를 제거하는 설정이다.
+# `go tool link`(또는 https://golang.org/cmd/link/)를 실행하면 더 많은 옵션 정보를 얻을 수 있다.
+GO_FLAGS_PRD += -ldflags="-s -w"
 
 ## help: print this help message
 .PHONY: help
@@ -12,136 +31,27 @@ help:
 	@echo 'Usage:'
 	@sed -n 's/^##//p' ${MAKEFILE_LIST} | column -t -s ':' |  sed -e 's/^/ /'
 
-# ==================================================================================== #
-# QUALITY CONTROL
-# ==================================================================================== #
-
-## tidy: format code and tidy modfile
-.PHONY: tidy
-tidy:
-	go mod tidy
-	go fmt ./...
-
 ## audit: run quality control checks
 .PHONY: audit
-audit: tidy
+audit:
+	@echo GOPATH: ${shell go env GOPATH}
+	go mod tidy
 	go mod verify
+	go fmt ./...
 	go vet ./...
 
-# ==================================================================================== #
-# DEVELOPMENT
-# ==================================================================================== #
-
-## build: build the application
-.PHONY: build
-build: audit
+## dev: run the application with debugging enabled
+.PHONY: dev
+dev: audit
 	@rm -rf ./bin
-	go build -o=./bin/${BINARY_NAME} ./src
+	go build ${GO_FLAGS_DEV} ./src
+	@echo "Running with debugging enabled..."
+	@./bin/${BINARY_NAME}
 
 ## run: run the application
 .PHONY: run
-run: build
+run: audit
+	@rm -rf ./bin
+	go build ${GO_FLAGS_PRD} ./src
 	@echo "Running..."
 	@./bin/${BINARY_NAME}
-
-# # ==================================================================================== #
-# # ==================================================================================== #
-# # ==================================================================================== #
-# # ==================================================================================== #
-# # ==================================================================================== #
-# # ==================================================================================== #
-
-# # Change these variables as necessary.
-# MAIN_PACKAGE_PATH := ./cmd/example
-# BINARY_NAME := example
-
-# # ==================================================================================== #
-# # HELPERS
-# # ==================================================================================== #
-
-# ## help: print this help message
-# .PHONY: help
-# help:
-# 	@echo 'Usage:'
-# 	@sed -n 's/^##//p' ${MAKEFILE_LIST} | column -t -s ':' |  sed -e 's/^/ /'
-
-# .PHONY: confirm
-# confirm:
-# 	@echo -n 'Are you sure? [y/N] ' && read ans && [ $${ans:-N} = y ]
-
-# .PHONY: no-dirty
-# no-dirty:
-# 	git diff --exit-code
-
-
-# # ==================================================================================== #
-# # QUALITY CONTROL
-# # ==================================================================================== #
-
-# ## tidy: format code and tidy modfile
-# .PHONY: tidy
-# tidy:
-# 	go fmt ./...
-# 	go mod tidy -v
-
-# ## audit: run quality control checks
-# .PHONY: audit
-# audit:
-# 	go mod verify
-# 	go vet ./...
-# 	go run honnef.co/go/tools/cmd/staticcheck@latest -checks=all,-ST1000,-U1000 ./...
-# 	go run golang.org/x/vuln/cmd/govulncheck@latest ./...
-# 	go test -race -buildvcs -vet=off ./...
-
-
-# # ==================================================================================== #
-# # DEVELOPMENT
-# # ==================================================================================== #
-
-# ## test: run all tests
-# .PHONY: test
-# test:
-# 	go test -v -race -buildvcs ./...
-
-# ## test/cover: run all tests and display coverage
-# .PHONY: test/cover
-# test/cover:
-# 	go test -v -race -buildvcs -coverprofile=/tmp/coverage.out ./...
-# 	go tool cover -html=/tmp/coverage.out
-
-# ## build: build the application
-# .PHONY: build
-# build:
-# # Include additional build steps, like TypeScript, SCSS or Tailwind compilation here...
-# 	go build -o=/tmp/bin/${BINARY_NAME} ${MAIN_PACKAGE_PATH}
-
-# ## run: run the  application
-# .PHONY: run
-# run: build
-# 	/tmp/bin/${BINARY_NAME}
-
-# ## run/live: run the application with reloading on file changes
-# .PHONY: run/live
-# run/live:
-# 	go run github.com/cosmtrek/air@v1.43.0 \
-# 		--build.cmd "make build" --build.bin "/tmp/bin/${BINARY_NAME}" --build.delay "100" \
-# 		--build.exclude_dir "" \
-# 		--build.include_ext "go, tpl, tmpl, html, css, scss, js, ts, sql, jpeg, jpg, gif, png, bmp, svg, webp, ico" \
-# 		--misc.clean_on_exit "true"
-
-
-# # ==================================================================================== #
-# # OPERATIONS
-# # ==================================================================================== #
-
-# ## push: push changes to the remote Git repository
-# .PHONY: push
-# push: tidy audit no-dirty
-# 	git push
-
-# ## production/deploy: deploy the application to production
-# .PHONY: production/deploy
-# production/deploy: confirm tidy audit no-dirty
-# 	GOOS=linux GOARCH=amd64 go build -ldflags='-s' -o=/tmp/bin/linux_amd64/${BINARY_NAME} ${MAIN_PACKAGE_PATH}
-# 	upx -5 /tmp/bin/linux_amd64/${BINARY_NAME}
-# # Include additional deployment steps here...

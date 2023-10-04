@@ -11,7 +11,7 @@ GO_FLAGS += -o=./bin/${BINARY_NAME}
 # 컨테이너 환경에서 빌드할 때 VCS 정보를 가져오지 못해 빌드가 실패하는 경우가 있음.
 # 필요하면 빌드하기 전에 git safe directory 설정을 추가하면 되긴 하는듯
 # git config --global --add safe.directory ${shell pwd}
-GO_FLAGS += -buildvcs=false
+# GO_FLAGS += -buildvcs=false
 
 GO_FLAGS_DEV += ${GO_FLAGS}
 # 컴파일러 플래그 설정
@@ -34,7 +34,7 @@ help:
 ## audit: run quality control checks
 .PHONY: audit
 audit:
-	@echo GOPATH: ${shell go env GOPATH}
+	@echo "GOPATH: ${shell go env GOPATH}"
 	go mod tidy
 	go mod verify
 	go fmt ./...
@@ -44,7 +44,7 @@ audit:
 .PHONY: dev
 dev: audit
 	@rm -rf ./bin
-	go build ${GO_FLAGS_DEV} ./src
+	@go build ${GO_FLAGS_DEV} ./src
 	@echo "Running with debugging enabled..."
 	@./bin/${BINARY_NAME}
 
@@ -52,6 +52,6 @@ dev: audit
 .PHONY: run
 run: audit
 	@rm -rf ./bin
-	go build ${GO_FLAGS_PRD} ./src
+	@go build ${GO_FLAGS_PRD} ./src
 	@echo "Running..."
 	@./bin/${BINARY_NAME}

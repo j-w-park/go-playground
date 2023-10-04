@@ -1,10 +1,13 @@
 services:
   go-playground:
-    image: golang
     container_name: go-playground
-    working_dir: /go-playground
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
     volumes:
-      - .:/go-playground
+      - .:/app
     ports:
       - 8080:8080
-    command: ["make", "run"]
+      - 2345:2345 # for delve headless debugging server
+    entrypoint: ["make", "dev"] # ["make", "run"]

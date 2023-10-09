@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	handling_error.Wrapping()
+	handling_error.IsAndAs()
 }

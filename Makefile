@@ -7,23 +7,22 @@ BINARY_NAME := go-playground
 # 빌드 플래그
 GO_FLAGS += -v
 GO_FLAGS += -o=./bin/${BINARY_NAME}
+
 # VCS 관련 meta 정보를 바이너리에 포함하지 않도록 설정.
 # 컨테이너 환경에서 빌드할 때 VCS 정보를 가져오지 못해 빌드가 실패하는 경우가 있음.
 # 필요하면 빌드하기 전에 git safe directory 설정을 추가하면 되긴 하는듯
 # git config --global --add safe.directory ${shell pwd}
 # GO_FLAGS += -buildvcs=false
 
-GO_FLAGS_DEV += ${GO_FLAGS}
 # 컴파일러 플래그 설정
 # 아래 옵션은 컴파일 시 최적화를 비활성화한다.
 # `go tool compile`(또는 https://golang.org/cmd/compile/)를 실행하면 더 많은 옵션 정보를 얻을 수 있다.
-GO_FLAGS_DEV += -gcflags="all=-N -l"
+GO_FLAGS += -gcflags="all=-N -l"
 
-GO_FLAGS_PRD += ${GO_FLAGS}
 # 링커 플래그 설정
 # 아래 설정은 빌드된 바이너리의 크기를 최대한 줄이기 위해 디버깅 정보를 제거하는 설정이다.
 # `go tool link`(또는 https://golang.org/cmd/link/)를 실행하면 더 많은 옵션 정보를 얻을 수 있다.
-GO_FLAGS_PRD += -ldflags="-s -w"
+# GO_FLAGS += -ldflags="-s -w"
 
 ## help: print this help message
 .PHONY: help
@@ -40,18 +39,10 @@ audit:
 	go fmt ./...
 	go vet ./...
 
-## dev: run the application with debugging enabled
-.PHONY: dev
-dev: audit
-	@rm -rf ./bin
-	@go build ${GO_FLAGS_DEV} ./src
-	@echo "Running with debugging enabled..."
-	@./bin/${BINARY_NAME}
-
-## run: run the application
+## dev: run the application
 .PHONY: run
 run: audit
 	@rm -rf ./bin
-	@go build ${GO_FLAGS_PRD} ./src
+	@go build ${GO_FLAGS} ./src
 	@echo "Running..."
 	@./bin/${BINARY_NAME}

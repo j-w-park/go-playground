@@ -1,0 +1,9 @@
+services:
+  go-playground:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    container_name: go-playground
+    working_dir: /app
+    ports:
+      - 8080:8080

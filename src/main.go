@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/j-w-park/go-playground/src/example/handling_error"
+	"fmt"
 )
 
 func main() {
-	handling_error.IsAndAs()
+	fmt.Println("Hello, this is playground!")
 }

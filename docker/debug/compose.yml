@@ -1,0 +1,11 @@
+services:
+  app:
+    container_name: go-playground-debug-server
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - 12345:12345
+    command: ["debug", "--headless", "--listen=:12345", "--api-version=2"]

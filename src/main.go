@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
+	"github.com/j-w-park/go-playground/src/example/concurrency"
 )
 
 func main() {
-	fmt.Println("Hello, this is playground!")
+	concurrency.ExampleSelect2()
 }

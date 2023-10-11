@@ -44,13 +44,13 @@ build: audit
 run: build
 	@./bin/${BINARY_NAME}
 
-## up: run the application in docker
-.PHONY: up
-up:
-	@docker compose -f ./docker/compose.yml up --build
-
 ## clean: remove build artifacts
 .PHONY: clean
 clean:
 	@rm -rf ./bin
 	@docker compose -f ./docker/compose.yml down --remove-orphans  --volumes --rmi all
+
+## up: run the application in docker
+.PHONY: up
+up: clean
+	@docker compose -f ./docker/compose.yml up --build

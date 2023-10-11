@@ -1,10 +1,11 @@
-package equivalentbinarytrees
+package equivalentbinarytrees_test
 
 import (
 	"math/rand"
 	"sync"
 	"testing"
 
+	equivalentbinarytrees "github.com/j-w-park/go-playground/src/exercise/equivalent_binary_trees"
 	"golang.org/x/tour/tree"
 )
 
@@ -31,7 +32,7 @@ func TestWalkRecursive1(t *testing.T) {
 
 	// when
 	for i, tc := range testcases {
-		go WalkRecursive(chs[i], nil, tc.in)
+		go equivalentbinarytrees.WalkRecursive(chs[i], tc.in)
 	}
 
 	// then
@@ -76,7 +77,7 @@ func TestWalkRecursive2(t *testing.T) {
 
 	// when
 	for i, tc := range testcases {
-		go WalkRecursive(chs[i], nil, tc.in)
+		go equivalentbinarytrees.WalkRecursive(chs[i], tc.in)
 	}
 
 	// then

@@ -1,9 +1,23 @@
 package main
 
 import (
-	"github.com/j-w-park/go-playground/src/example/concurrency"
+	"fmt"
+
+	equivalentbinarytrees "github.com/j-w-park/go-playground/src/exercise/equivalent_binary_trees"
+	"golang.org/x/tour/tree"
 )
 
+func do() {
+	t := tree.New(1)
+	ch := make(chan int, 10)
+	go equivalentbinarytrees.WalkRecursive(ch, nil, t)
+	for v := range ch {
+		fmt.Println(v)
+	}
+}
+
 func main() {
-	concurrency.ExampleSelect2()
+	fmt.Println("main start")
+	do()
+	fmt.Println("main end")
 }

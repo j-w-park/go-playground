@@ -3,24 +3,18 @@ package main
 import (
 	"fmt"
 
-	equivalentbinarytrees "github.com/j-w-park/go-playground/src/exercise/equivalent_binary_trees"
-	"golang.org/x/tour/tree"
+	"github.com/j-w-park/go-playground/src/example/fuzzing"
 )
 
 func do() {
-	// t := tree.New(1)
-	// ch := make(chan int, 10)
-	// go equivalentbinarytrees.WalkRecursive(ch, nil, t)
-	// for v := range ch {
-	// 	fmt.Println(v)
-	// }
-
-	t := tree.New(1)
-	ch := make(chan int, 10)
-	go equivalentbinarytrees.WalkIterative(ch, t)
-	for v := range ch {
-		fmt.Println(v)
-	}
+	// input := "The quick brown fox jumped over the lazy dog"
+	// input := "ѹ"
+	input := "\xed"
+	rev, revErr := fuzzing.Reverse(input)
+	doubleRev, doubleRevErr := fuzzing.Reverse(rev)
+	fmt.Printf("original: %q\n", input)
+	fmt.Printf("reversed: %q, err: %v\n", rev, revErr)
+	fmt.Printf("reversed again: %q, err: %v\n", doubleRev, doubleRevErr)
 }
 
 func main() {
